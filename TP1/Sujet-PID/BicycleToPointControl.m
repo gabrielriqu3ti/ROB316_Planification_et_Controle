@@ -6,10 +6,13 @@ function [ u ] = BicycleToPointControl( xTrue,xGoal )
 
 
 % Paramètres de commande
-Kp = 1.0;
-Kalpha = 1.0;
+Kp = 3;
+Kalpha = 4;
 
-rho = sqrt((xTrue(1,1)-xGoal(1,1))^2 + ()^2)
+rho = sqrt((xTrue(1,1)-xGoal(1,1))^2 + (xTrue(2,1)-xGoal(2,1))^2);
+alpha = AngleWrap(atan2(xGoal(2,1)-xTrue(2,1), xGoal(1,1)-xTrue(1,1)) - xTrue(3,1));
+u(1,1) = Kp*rho;
+u(2,1) = Kalpha*alpha;
 
 end
 
