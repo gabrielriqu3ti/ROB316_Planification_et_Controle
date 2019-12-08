@@ -3,14 +3,14 @@ function BicycleToPose
 
 % Goal and random starting position
 xGoal = [0;0;0];
-a=rand()*2*pi;
-xTrue = [cos(a);sin(a);rand()*2*pi];
+a     = rand()*2*pi;
+xTrue = [cos(a);sin(a);rand()*2*pi];    
 
 %Storage for position and errors
-XStore = NaN*zeros(3,10000);
+XStore    = NaN*zeros(3,10000);
 XErrStore = NaN*zeros(5,10000);
-k=1;
-
+k         = 1;
+ 
 % loop until goal reached or max time
 while max(abs(dist(xTrue,xGoal)))>.05 && k<10000
     
