@@ -5,7 +5,7 @@ function [ u ] = BicycleToPathControl( xTrue, Path )
 %                                                 y1     y2   ... ;
 %                                               theta1 theta2 ... ]
 %   u is the control : [v phi]'
-
+    
 % Control parameters
 Krho = 5;
 Kalpha = 7.8;
