@@ -6,12 +6,13 @@ function [ u ] = BicycleToPathControl( xTrue, Path )
 %                                               theta1 theta2 ... ]
 %   u is the control : [v phi]'
 
-% Paramètres de commande
+% Control parameters
 Kp = 1;
 Kalpha = 1;
 rho_min = 1;
 %alpha_min = pi/4;
 
+%% 	Count size of the discretesized path
 nPt = size(Path,2);
 step = 0.5;
 n_disc_path = 1;
@@ -19,35 +20,40 @@ for pt=1:nPt-1
     n_disc_path = n_disc_path + round(sqrt((xTrue(1,1)-Path(1,pt))^2 + (xTrue(2,1)-Path(2,pt))^2)/step);
 end
 
-discrete_path = zeros(3,n_disc_path);
-ndisc_path_old = 1;
+%% 	Create the discretesized path
+discrete_path = zeros(2,n_disc_path);
+ndisc_path_old = 0;
 for pt=1:nPt-1
-    ndisc_path_current = round(sqrt((xTrue(1,1)-Path(1,pt))^2 + (xTrue(2,1)-Path(2,pt))^2)/step);
+    ndisc_path_current = round(sqrt((Path(1,pt+1)-Path(1,pt))^2 + (Path(2,pt+1)-Path(2,pt))^2)/step);
     alpha = AngleWrap(atan2(Path(2,pt+1)-Path(2,pt), Path(1,pt+1)-Path(1,pt)));
-    discrete_path(1,pt) = Path();
+    discrete_path(1,ndisc_path_old+1) = Path(1,pt);
+    discrete_path(2,ndisc_path_old+1) = Path(2,pt);
     for disc_pt=2:ndisc_path_current
-        discrete_path(1,pt+disc_pt) = step*sin(alpha);
-        discrete_path(2,pt+disc_pt) = step*cos(alpha);
+        discrete_path(1,pt+disc_pt) = Path(1,pt) + step*cos(alpha);
+        discrete_path(2,pt+disc_pt) = Path(2,pt) + step*sin(alpha);
     end
     ndisc_path_old = ndisc_path_old + ndisc_path_current;
 end
+Path
+discrete_path
 
-rho_closest = sqrt((xTrue(1,1)-Path(1,1))^2 + (xTrue(2,1)-Path(2,1))^2);
+%% Evaluate next point
+rho_closest = sqrt((xTrue(1,1)-discrete_path(1,1))^2 + (xTrue(2,1)-discrete_path(2,1))^2);
 pt_next = 2;
-for pt=2:nPt
-    rho = sqrt((xTrue(1,1)-Path(1,pt))^2 + (xTrue(2,1)-Path(2,pt))^2);
+for pt=2:n_disc_path
+    rho = sqrt((xTrue(1,1)-discrete_path(1,pt))^2 + (xTrue(2,1)-discrete_path(2,pt))^2);
     if rho<rho_closest
         rho_closest = rho;
         pt_next = pt+1;
     end
 end
 
-if pt_next > nPt
-    pt_next = nPt;
+if pt_next > n_disc_path
+    pt_next = n_disc_path;
 end
 
-rho_next = sqrt((xTrue(1,1)-Path(1,pt_next))^2 + (xTrue(2,1)-Path(2,pt_next))^2);
-alpha_next = AngleWrap(atan2(Path(2,pt_next)-xTrue(2,1), Path(1,pt_next)-xTrue(1,1)) - xTrue(3,1));
+rho_next = sqrt((xTrue(1,1)-n_disc_path(1,pt_next))^2 + (xTrue(2,1)-n_disc_path(2,pt_next))^2);
+alpha_next = AngleWrap(atan2(n_disc_path(2,pt_next)-xTrue(2,1), n_disc_path(1,pt_next)-xTrue(1,1)) - xTrue(3,1));
 
 u(1,1) = Kp*rho_next;
 u(2,1) = Kalpha*alpha_next;
