@@ -19,13 +19,12 @@ for pt=1:nPt-1
     n_disc_path = n_disc_path + round(sqrt((xTrue(1,1)-Path(1,pt))^2 + (xTrue(2,1)-Path(2,pt))^2)/step);
 end
 
-discrete_path = zeros(2,n_disc_path);
-ndisc_path_old = 0;
+discrete_path = zeros(3,n_disc_path);
+ndisc_path_old = 1;
 for pt=1:nPt-1
     ndisc_path_current = round(sqrt((xTrue(1,1)-Path(1,pt))^2 + (xTrue(2,1)-Path(2,pt))^2)/step);
     alpha = AngleWrap(atan2(Path(2,pt+1)-Path(2,pt), Path(1,pt+1)-Path(1,pt)));
-    discrete_path(1,ndisc_path_old+1) = Path(1,pt);
-    discrete_path(2,ndisc_path_old+1) = Path(1,pt);
+    discrete_path(1,pt) = Path();
     for disc_pt=2:ndisc_path_current
         discrete_path(1,pt+disc_pt) = step*sin(alpha);
         discrete_path(2,pt+disc_pt) = step*cos(alpha);

@@ -28,9 +28,9 @@ while max(abs(dist(xTrue(1:2,1),Path(1:2,end))))>.005 && k<20000
     if(mod(k-2,100)==0)
         DoBicycleGraphicsPath(xTrue,XStore,Path);
         drawnow;
-    end;
+    end
     
-end;
+end
 
 % Draw final position and error curves
 DoBicycleGraphicsPath(xTrue,XStore,Path);
