@@ -3,11 +3,13 @@ function [ u ] = BicycleToPoseControl( xTrue,xGoal )
 %   xTrue is the robot current pose : [ x y theta ]'
 %   xGoal is the goal point
 %   u is the control : [v phi]'
+%   Author : Victor K. Kobayashi Nascimento
+%   Orientator : David Filliat
 
 % Paramètres du commande
-Krho      = 5; % 9
-Kalpha    = 10;
-Kbeta     = 10; % 11
+Krho      = 5;
+Kalpha    = 20;
+Kbeta     = -9;
 
 u = [0;0;0];
 
@@ -23,7 +25,7 @@ u(1,1) = Krho*rho;
 % BETA
 %beta = AngleWrap(AngleWrap(xGoal(3,1)) - AngleWrap(xTrue(3,1)));
 %beta = AngleWrap(xGoal(3,1)) - AngleWrap(xTrue(3,1));
-beta = xGoal(3,1) - AngleWrap(xTrue(3,1));
+beta = AngleWrap(xGoal(3,1) - xTrue(3,1));
 
 % PHI
 if (Kbeta < 0)

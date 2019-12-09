@@ -29,9 +29,9 @@ while max(abs(dist(xTrue,xGoal)))>.05 && k<10000
     if(mod(k-2,100)==0)
         DoBicycleGraphics(xTrue,XStore,XErrStore);
         drawnow;
-    end;
+    end
 
-end;
+end
 
 % Draw final position and error curves
 DoBicycleGraphics(xTrue,XStore,XErrStore);

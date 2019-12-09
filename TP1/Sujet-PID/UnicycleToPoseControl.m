@@ -3,7 +3,8 @@ function [ u ] = UnicycleToPoseControl( xTrue,xGoal )
 %   xTrue is the robot current pose : [ x y theta ]'
 %   xGoal is the goal point
 %   u is the control : [v omega]'
-
+%   Author : Gabriel H. Riqueti
+%   Orientator : David Filliat
 
 % Paramètres du commande
 Krho = 9;
