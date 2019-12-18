@@ -11,7 +11,7 @@ XErrStore = zeros(3,20000);
 k=1;
 
 % loop until goal reached or max time
-while max(abs(dist(xTrue(1:2,1),Path(1:2,end))))>.005 && k<200000 %20000
+while max(abs(sqrt((xTrue(1,1)-Path(1,end))^2+(xTrue(2,1)-Path(2,end))^2)))>.005 && k<200000 %20000
     % Compute Control
     u=BicycleToPathControl2(xTrue,Path);
     
