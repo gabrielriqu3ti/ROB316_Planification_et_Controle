@@ -16,9 +16,9 @@ end
 dt = .01; % integration time (same than simulation)
 
 %% define goals and size of window
-window_size = 18;   %1 : anticipe, 5 : anticipe bien, controle plus souple, 
+window_size = 1000;   %1 : anticipe, 5 : anticipe bien, controle plus souple, 
 %20 : coupe un peu, controle très souple, 100 : coupe un peu, 1000 : triche !
-vmax = 2.0;
+vmax = 1.0;
 dmax = vmax * dt; %distance max for one step
 
 step = dmax;
@@ -88,8 +88,8 @@ end
 anticipation = window_size;  %which future points is the objective
 
 %% Then perform P control
-Krho = 2;
-Kalpha = 3;
+Krho = 200;
+Kalpha = 5;
 
 error = list_points(:,anticipation) - xTrue;
 goalDist = norm(error(1:2));

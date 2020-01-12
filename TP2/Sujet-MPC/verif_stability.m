@@ -22,7 +22,7 @@ function ok = verif_stability(x_verif)
     %Essai riccati : A'P+PA-PB inv(R) B'P + Q =0
     [x, l, g] = care(A, B, Q, R);
     %calcul du control à applier au systeme
-    K = -g 
+    K = -g
     
     %TODO calculer l'équation du système avec rebouclage
     %systeme rebouclage

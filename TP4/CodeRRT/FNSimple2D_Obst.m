@@ -63,7 +63,7 @@ classdef FNSimple2D_Obst < handle
             this.index = zeros(1, max_nodes);
             this.list = 1:max_nodes;
             this.num_rewired = 0;
-            
+                
             this.bin_ind = zeros(10, max_nodes);
             
             this.bin_size = conf.bin_size;
@@ -184,6 +184,29 @@ classdef FNSimple2D_Obst < handle
             % this.obstacle.num is the number of obstacles
             % this.obstacle.output{obs_ind} is an array giving the
             %                                   obstacles corners
+            rand_pts = rand(1,1);
+            rand_obs = rand(1,1);
+            
+            if rand_pts > 0.5
+                position = [this.XY_BOUNDARY(2) - this.XY_BOUNDARY(1); this.XY_BOUNDARY(4) - this.XY_BOUNDARY(3)] .* rand(2,1) ...
+                    + [this.XY_BOUNDARY(1);this.XY_BOUNDARY(3)];
+            else
+                obs_i = ceil(rand_obs*this.obstacle.num)
+                size(this.obstacle.output{obs_i})
+                [n_nodes_i, ~] = size(this.obstacle.output{obs_i});
+                
+                center_i = [this.XY_BOUNDARY(1);this.XY_BOUNDARY(3)];
+                for i=1:n_nodes_i
+                    center_i = center_i + this.obstacle.output(i,:);
+                end
+                center_i = center_i/n_nodes_i;
+                
+                ratio_min_i = 0;
+                ratio_max_i = 0;
+                
+                position = [this.XY_BOUNDARY(2) - this.XY_BOUNDARY(1); this.XY_BOUNDARY(4) - this.XY_BOUNDARY(3)] .* rand(2,1) ...
+                    + [this.XY_BOUNDARY(1);this.XY_BOUNDARY(3)];
+            end
             
             
             %%%%%%%%
