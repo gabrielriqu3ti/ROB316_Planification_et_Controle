@@ -1,0 +1,6 @@
+(define (problem BLOCKS-4-0)
+(:domain BLOCKS)
+(:objects A B C)
+(:INIT (NOT (HIGHMONKEY)) (NOT (GRABBANANA)) (MONKEYON A) (BOXON B) (BANANAON C))
+(:goal (GRABBANANA))
+)
