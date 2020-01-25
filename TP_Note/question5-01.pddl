@@ -1,6 +1,0 @@
-(define (problem NOEUDS-2-0)
-(:domain NOEUDS)
-(:objects A B )
-(:INIT (ON A) (ARC A B))
-(:goal (ON B))
-)
