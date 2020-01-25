@@ -1,4 +1,4 @@
-# Command pour lancer le programme: 
+# Command pour lancer le programme:
 
 Ci-dessous vous pouvez trouver une série de commandes pour lancer les fichiers corrects pour chaque exercicie développé.
 
@@ -15,6 +15,11 @@ cpt.exe -o domain-blocksaips.pddl -f question3.pddl
 ## Exercice 4
 ```
 cpt.exe -o domain-blocksaips.pddl -f question4.pddl
+```
+
+## Exercice 5
+```
+cpt.exe -o domain-question5.pddl -f question5-01.pddl
 ```
 
 ## Exercice 6

@@ -4,54 +4,66 @@
 
 (define (domain BLOCKS)
   (:requirements :strips)
-  (:predicates 
-              (monkeyon ?x) 
-	    (bananaon ?x)
-	    (boxon    ?x)
-	    (grabbanana)
-	    (dropbanana)
-              (highmonkey)
-	    (lowmonkey)
-	    )
+  (:predicates (on ?x ?y)
+	       (ontable ?x)
+	       (clear ?x)
+	       (handempty)
+	       (holding ?x)
+	       )
 
   (:action aller
-	     :parameters (?x ?y)
-	     :precondition (and  (lowmonkey) (monkeyon ?x)) ; Ne pas mettre de négations sur les precondition 
+	     :parameters (?x)
+	     :precondition (and (clear ?x) (ontable ?x) (handempty))
 	     :effect
-	     (and (monkeyon ?y)
-	             (not (monkeyon ?x))))
+	     (and (not (ontable ?x))
+		   (not (clear ?x))
+		   (not (handempty))
+		   (holding ?x)))
 
   (:action pousser
-	     :parameters (?x ?y)
-	     :precondition (and (lowmonkey) (monkeyon ?x) (boxon ?x))
+	     :parameters (?x)
+	     :precondition (holding ?x)
 	     :effect
-	     (and (monkeyon ?y)
-		   (boxon ?y)
-		   (not (monkeyon ?x))
-		   (not (boxon ?x))))
-
+	     (and (not (holding ?x))
+		   (clear ?x)
+		   (handempty)
+		   (ontable ?x)))
   (:action monter
-	     :parameters (?x)
-	     :precondition (and (lowmonkey) (monkeyon ?x) (boxon ?x) (bananaon ?x))
+	     :parameters (?x ?y)
+	     :precondition (and (holding ?x) (clear ?y))
 	     :effect
-	     (highmonkey))
-
+	     (and (not (holding ?x))
+		   (not (clear ?y))
+		   (clear ?x)
+		   (handempty)
+		   (on ?x ?y)))
   (:action descendre
-	     :parameters (?x)
-	     :precondition (highmonkey)
+	     :parameters (?x ?y)
+	     :precondition (and (on ?x ?y) (clear ?x) (handempty))
 	     :effect
-	     (lowmonkey))
+	     (and (holding ?x)
+		   (clear ?y)
+		   (not (clear ?x))
+		   (not (handempty))
+		   (not (on ?x ?y)))))
 
   (:action attraper
-	     :parameters (?x)
-	     :precondition (and (highmonkey) (monkeyon ?x) (bananaon ?x))
+	     :parameters (?x ?y)
+	     :precondition (and (on ?x ?y) (clear ?x) (handempty))
 	     :effect
-	     (grabbanana))
+	     (and (holding ?x)
+		   (clear ?y)
+		   (not (clear ?x))
+		   (not (handempty))
+		   (not (on ?x ?y)))))
 
   (:action lacher
-	     :parameters (?x)
-	     :precondition (grabbanana)
+	     :parameters (?x ?y)
+	     :precondition (and (on ?x ?y) (clear ?x) (handempty))
 	     :effect
-	     (dropbanana))
-)
+	     (and (holding ?x)
+		   (clear ?y)
+		   (not (clear ?x))
+		   (not (handempty))
+		   (not (on ?x ?y)))))
 
