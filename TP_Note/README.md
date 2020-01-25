@@ -21,3 +21,7 @@ cpt.exe -o domain-blocksaips.pddl -f question4.pddl
 ```
 cpt.exe -o domain-singe.pddl -f singe-bananes01.pddl
 ```
+## Exercice 7
+```
+cpt.exe -o domain-hanoi.pddl -f hanoi.pddl
+```
