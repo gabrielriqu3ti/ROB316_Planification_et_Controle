@@ -16,7 +16,7 @@
 
   (:action aller
 	     :parameters (?x ?y)
-	     :precondition (and  (lowmonkey) (monkeyon ?x)) ; nao pode colocar not na precondition 
+	     :precondition (and  (lowmonkey) (monkeyon ?x)) ; Ne pas mettre de négations sur les precondition 
 	     :effect
 	     (and (monkeyon ?y)
 	             (not (monkeyon ?x))))
